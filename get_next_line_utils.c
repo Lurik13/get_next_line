@@ -6,13 +6,13 @@
 /*   By: lribette <lribette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:46:40 by lribette          #+#    #+#             */
-/*   Updated: 2023/11/10 18:14:08 by lribette         ###   ########.fr       */
+/*   Updated: 2023/11/11 19:27:37 by lribette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(char *str)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strjoin(const char *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	len_s1;
 	size_t	len_s2;
@@ -30,6 +30,8 @@ char	*ft_strjoin(const char *s1, char const *s2)
 	size_t	j;
 	char	*str;
 
+	if (!s1)
+		return (s2);
 	len_s1 = ft_strlen(s1);
 	len_s2 = ft_strlen(s2);
 	i = -1;
@@ -42,26 +44,31 @@ char	*ft_strjoin(const char *s1, char const *s2)
 	while (s2[++j])
 		str[i + j] = s2[j];
 	str[i + j] = '\0';
+	free(s1);
+	free(s2);
 	return (str);
 }
 
-char    *read_line(int fd)
-{
-    char    *buffer;
-    int     i;
-
-    i = -1;
-    buffer = malloc(BUFFER_SIZE);
+char    *ft_read_line(int fd)
+{	
+	char    *buffer;
+	int     i;
+	ssize_t x;
+	
+	i = -1;
+	buffer = malloc(BUFFER_SIZE);
 	if (!buffer)
 		return (NULL);
-	read(fd, buffer, BUFFER_SIZE);
+	x = read(fd, buffer, BUFFER_SIZE);
+	if (x == -1)
+		return (NULL);
 	return (buffer);
 }
-
+/*
 int	main(void)
 {
 	int	fd;
 	
 	fd = open("text.txt", O_RDONLY);
-	printf("%s", read_line(fd));
-}
+	printf("%s", ft_read_line(fd));
+}*/
