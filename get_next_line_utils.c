@@ -6,7 +6,7 @@
 /*   By: lribette <lribette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:37:34 by lribette          #+#    #+#             */
-/*   Updated: 2023/11/12 18:51:21 by lribette         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:04:10 by lribette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,40 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_read_line(int fd)
+char	*ft_strjoin(char *result, char *buffer)
 {
-	char	buffer[BUFFER_SIZE];
-	ssize_t x;
-
-	x = read(fd, buffer, BUFFER_SIZE);
-	if (x == 0)
+	size_t	i;
+	size_t	j;
+	char	*str;
+	
+	i = -1;
+	j = -1;
+	str = malloc(ft_strlen(result) + ft_strlen(buffer) + 1);
+	if (!str)
 		return (NULL);
-	return (buffer);
+	while (result[++i])
+		str[i] = result[i];
+	while (buffer[++j])
+		str[i + j] = buffer[j];
+	str[i + j] = '\0';
+	
+	return (str);
+}
+
+char	*ft_read_line(int fd, char *result)
+{
+	char	*buffer;
+	int	x;
+
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	x = read(fd, buffer, BUFFER_SIZE);
+	if (x <= 0)
+		return (NULL);
+	result = ft_strjoin(result, buffer);
+	free(buffer);
+	return (result);
 }
 
 int	main(void)
@@ -43,5 +68,5 @@ int	main(void)
 		close(fd);
 		return (1);
 	}
-	printf("%s", ft_read_line(fd));
+	printf("%s", ft_read_line(fd, "salut"));
 }
