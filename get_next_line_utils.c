@@ -6,7 +6,7 @@
 /*   By: lribette <lribette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:37:34 by lribette          #+#    #+#             */
-/*   Updated: 2023/11/13 13:04:10 by lribette         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:29:07 by lribette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ char	*ft_strjoin(char *result, char *buffer)
 	while (buffer[++j])
 		str[i + j] = buffer[j];
 	str[i + j] = '\0';
-	
 	return (str);
 }
 
@@ -56,6 +55,20 @@ char	*ft_read_line(int fd, char *result)
 	result = ft_strjoin(result, buffer);
 	free(buffer);
 	return (result);
+}
+
+int	ft_strchr(char *str, char c)
+{
+	int		i;
+
+	i = -1;
+	while (str[++i] != c)
+	{
+		if (str[i] == '\0')
+			return (-i);
+		if (str[i] == '\n')
+			return (i);
+	}
 }
 
 int	main(void)
