@@ -6,7 +6,7 @@
 /*   By: lribette <lribette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:29:51 by lribette          #+#    #+#             */
-/*   Updated: 2023/11/13 18:29:18 by lribette         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:27:57 by lribette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 int	ft_strlen(char *str);
 char	*ft_strjoin(char *result, char *buffer);
 char	*ft_read_line(int fd, char *result);
-int	ft_strchr(char *str, char c);
+int	ft_strchr(char *str);
 char *get_next_line(int fd);
 
 #endif

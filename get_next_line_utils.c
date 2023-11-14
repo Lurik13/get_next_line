@@ -6,7 +6,7 @@
 /*   By: lribette <lribette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:37:34 by lribette          #+#    #+#             */
-/*   Updated: 2023/11/13 18:29:07 by lribette         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:19:24 by lribette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strlen(char *str)
 	int	i;
 
 	i = 0;
+	if (str == NULL)
+		return (0);
 	while (str[i])
 		i++;
 	return (i);
@@ -27,7 +29,7 @@ char	*ft_strjoin(char *result, char *buffer)
 	size_t	i;
 	size_t	j;
 	char	*str;
-	
+
 	i = -1;
 	j = -1;
 	str = malloc(ft_strlen(result) + ft_strlen(buffer) + 1);
@@ -57,19 +59,35 @@ char	*ft_read_line(int fd, char *result)
 	return (result);
 }
 
-int	ft_strchr(char *str, char c)
+int	ft_strchr(char *str)
 {
 	int		i;
 
 	i = -1;
-	while (str[++i] != c)
+	while (str[++i] != '\n')
 	{
 		if (str[i] == '\0')
-			return (-i);
-		if (str[i] == '\n')
-			return (i);
+			return (-1);
 	}
+	return (i);
 }
+
+/*char	*ft_strdup(char *s, int i)
+{
+	char	*ptr;
+	int		i;
+	int		len;
+
+	i = -1;
+	len = ft_strlen(s);
+	ptr = malloc((len + 1));
+	if (!ptr)
+		return (NULL);
+	while (s[++i] || i < ft_strchr(s) + 1)
+		ptr[i] = s[i];
+	ptr[i] = '\0';
+	return (ptr);
+}*/
 
 int	main(void)
 {
