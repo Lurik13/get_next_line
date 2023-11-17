@@ -6,17 +6,14 @@
 /*   By: lribette <lribette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:37:34 by lribette          #+#    #+#             */
-/*   Updated: 2023/11/14 17:19:24 by lribette         ###   ########.fr       */
+/*   Updated: 2023/11/16 16:39:34 by lribette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(char *str)
+int	ft_strlen(char *str, int i)
 {
-	int	i;
-
-	i = 0;
 	if (str == NULL)
 		return (0);
 	while (str[i])
@@ -30,20 +27,23 @@ char	*ft_strjoin(char *result, char *buffer)
 	size_t	j;
 	char	*str;
 
-	i = -1;
+	i = 0;
 	j = -1;
-	str = malloc(ft_strlen(result) + ft_strlen(buffer) + 1);
+	str = malloc(ft_strlen(result, 0) + ft_strlen(buffer, 0) + 1);
 	if (!str)
 		return (NULL);
-	while (result[++i])
+	while (result && result[i])
+	{
 		str[i] = result[i];
+		i++;
+	}
 	while (buffer[++j])
 		str[i + j] = buffer[j];
 	str[i + j] = '\0';
 	return (str);
 }
 
-char	*ft_read_line(int fd, char *result)
+char	*ft_read_line(int fd, char *result, int *isread)
 {
 	char	*buffer;
 	int	x;
@@ -53,7 +53,8 @@ char	*ft_read_line(int fd, char *result)
 		return (NULL);
 	x = read(fd, buffer, BUFFER_SIZE);
 	if (x <= 0)
-		return (NULL);
+		*isread = -1;
+	buffer[x] = 0;
 	result = ft_strjoin(result, buffer);
 	free(buffer);
 	return (result);
@@ -65,31 +66,28 @@ int	ft_strchr(char *str)
 
 	i = -1;
 	while (str[++i] != '\n')
-	{
 		if (str[i] == '\0')
 			return (-1);
-	}
 	return (i);
 }
 
-/*char	*ft_strdup(char *s, int i)
+char	*ft_strdup(char *s, int len, int start)
 {
 	char	*ptr;
-	int		i;
-	int		len;
 
-	i = -1;
-	len = ft_strlen(s);
 	ptr = malloc((len + 1));
 	if (!ptr)
 		return (NULL);
-	while (s[++i] || i < ft_strchr(s) + 1)
-		ptr[i] = s[i];
-	ptr[i] = '\0';
+	while (s[start] || start <= len)
+	{
+		ptr[start] = s[start];
+		start++;
+	}
+	ptr[start] = '\0';
 	return (ptr);
-}*/
+}
 
-int	main(void)
+/*int	main(void)
 {
 	int	fd;
 
@@ -100,4 +98,4 @@ int	main(void)
 		return (1);
 	}
 	printf("%s", ft_read_line(fd, "salut"));
-}
+}*/
