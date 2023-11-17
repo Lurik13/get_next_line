@@ -6,7 +6,7 @@
 /*   By: lribette <lribette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:37:34 by lribette          #+#    #+#             */
-/*   Updated: 2023/11/16 16:39:34 by lribette         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:44:05 by lribette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_strjoin(char *result, char *buffer)
 
 	i = 0;
 	j = -1;
-	str = malloc(ft_strlen(result, 0) + ft_strlen(buffer, 0) + 1);
+	str = malloc(ft_strlen(result, 0) + ft_strlen(buffer, 0)) + 1;
 	if (!str)
 		return (NULL);
 	while (result && result[i])
@@ -45,18 +45,16 @@ char	*ft_strjoin(char *result, char *buffer)
 
 char	*ft_read_line(int fd, char *result, int *isread)
 {
-	char	*buffer;
+	char	buffer[BUFFER_SIZE + 1];
 	int	x;
 
-	buffer = malloc(BUFFER_SIZE + 1);
-	if (!buffer)
-		return (NULL);
+	
 	x = read(fd, buffer, BUFFER_SIZE);
 	if (x <= 0)
 		*isread = -1;
 	buffer[x] = 0;
 	result = ft_strjoin(result, buffer);
-	free(buffer);
+	//free(buffer);
 	return (result);
 }
 
@@ -78,7 +76,7 @@ char	*ft_strdup(char *s, int len, int start)
 	ptr = malloc((len + 1));
 	if (!ptr)
 		return (NULL);
-	while (s[start] || start <= len)
+	while (s[start] && start <= len)
 	{
 		ptr[start] = s[start];
 		start++;

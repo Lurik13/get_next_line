@@ -6,11 +6,21 @@
 /*   By: lribette <lribette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:37:54 by lribette          #+#    #+#             */
-/*   Updated: 2023/11/16 16:51:49 by lribette         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:46:32 by lribette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*ptr;
+
+	ptr = malloc(nmemb * size);
+	if (ptr)
+		ft_bzero(ptr, nmemb * size);
+	return (ptr);
+}
 
 void	ft_bzero(void *src, size_t n)
 {
@@ -28,13 +38,13 @@ char	*ft_right_charr(char *result, int *isread)
 {
 	int	x;
 	int	i;
-	char	*tmp;
+	//char	*tmp;
 
 	if (*isread == -1)
 		return (NULL);
 	i = 0;
 	x = ft_strchr(result) + 1;
-	tmp = ft_strdup(result, ft_strlen(result, 0) - x, x);
+	result = ft_strjoin("", result + x);
 	while (result[x])
 	{
 		tmp[i] = result[x];
@@ -51,35 +61,33 @@ char	*ft_right_charr(char *result, int *isread)
 
 char	*get_next_line(int fd)
 {
-	static char	*result;
+	static char	*result = NULL;
 	char	*returned_line;
 	int	isread;
 
 	isread = 1;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd <= 0 || BUFFER_SIZE <= 0)
 		return (0);
 	result = ft_read_line(fd, result, &isread);
 	while (ft_strchr(result) == -1 && isread != -1)
-	{
 		result = ft_read_line(fd, result, &isread);
-		/*if ((ft_strlen(result, 0) % BUFFER_SIZE) != 0)
-			break ;*/
-	}
 	returned_line = ft_strdup(result, ft_strchr(result), 0);
 	result = ft_right_charr(result, &isread);
+	if (returned_line[0] == '\n' && returned_line[1])
+		return ("\n");
+	if (isread == -1)
+		return (NULL);
 	return (returned_line);
 }
 
-//retourne chaine jusqu'au \n inclus
-//static = chaine de droite
-//comptabiliser la ligne sans \n
-//comptabiliser ancienne chaine
 //return (null) ?
+//comptabiliser \n
 
 int	main(void)
 {
 	int fd;
 	int i;
+	char *result;
 
 	i = 0;
 	fd = open("text.txt", O_RDONLY);
@@ -88,11 +96,12 @@ int	main(void)
 		close(fd);
 		return (1);
 	}
-	while (i < 5)
+	while (i < 6)
 	{
-		printf("%s", get_next_line(fd));
+		result = get_next_line(fd);
+		printf("%s", result);
 		i++;
 	}
-	free
+	free(result);
 	return (0);
 }
