@@ -6,11 +6,11 @@
 /*   By: lribette <lribette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 12:06:42 by lribette          #+#    #+#             */
-/*   Updated: 2023/11/19 19:06:40 by lribette         ###   ########.fr       */
+/*   Updated: 2023/11/21 12:25:02 by lribette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_read_file(int fd, char *result)
 {

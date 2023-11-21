@@ -6,11 +6,11 @@
 /*   By: lribette <lribette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 12:06:40 by lribette          #+#    #+#             */
-/*   Updated: 2023/11/19 19:07:00 by lribette         ###   ########.fr       */
+/*   Updated: 2023/11/21 12:24:45 by lribette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_strlen(char *str)
 {
